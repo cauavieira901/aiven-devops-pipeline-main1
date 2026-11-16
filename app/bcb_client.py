@@ -17,9 +17,9 @@ DB_URL = os.environ.get("AIVEN_DB_URL")
 # Séries do SGS/BCB — dados abertos, sem autenticação.
 # Referência completa de códigos: https://www3.bcb.gov.br/sgspub
 SERIES = {
-    1:   {"name": "Dólar comercial (venda)", "unit": "R$", "casas": 4},
-    432: {"name": "Meta Selic definida pelo Copom", "unit": "% a.a.", "casas": 2},
-    433: {"name": "IPCA - variação mensal", "unit": "%", "casas": 2},
+ 20539: {"name": "Saldo da carteira de crédito", "unit": "R$ mi", "casas": 0},
+ 21082: {"name": "Inadimplência do crédito", "unit": "%", "casas": 2},
+ 29037: {"name": "Endividamento das famílias (% da renda)", "unit": "%", "casas": 2},
 }
 POINTS_PER_SERIES = 30
 
@@ -120,7 +120,7 @@ def fetch_series_from_bcb(series_code: int, n: int = POINTS_PER_SERIES):
     isso usamos aqui o endpoint padrão com `dataInicial`/`dataFinal`, que
     funciona normalmente, e pegamos só os últimos N pontos retornados.
     """
-    days_back = n * 3  # margem folgada: nem todo dia tem valor (fins de semana, feriados etc.)
+    days_back = n * 35  # margem folgada: nem todo dia tem valor (fins de semana, feriados etc.)
     today = datetime.date.today()
     start = today - datetime.timedelta(days=days_back)
 
